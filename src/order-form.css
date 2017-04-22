@@ -30,7 +30,7 @@
 
 }
 
-mwc-menu {
+.menu {
   flex: 2;
   padding: 20px;
   margin: 20px;
@@ -38,7 +38,7 @@ mwc-menu {
   border-radius: 5px;
 }
 
-mwc-register {
+.register-container {
   flex: 1;
   margin: 20px;
   padding: 0 30px;
@@ -67,69 +67,83 @@ mwc-register {
 }
 
 /* Register */
-mwc-register table {
+
+.register-container table {
   width: 100%;
   border-collapse: collapse;
 }
 
 
 
-mwc-register .price {
+
+.register-container.price {
   font-family: monospace;
   font-size: 1.2em;
 }
 
-mwc-register input {
+
+.register-container input {
   font-family: monospace;
   font-size: 1.2em;
 }
 
 
-mwc-register thead th {
+
+.register-containerthead th {
   text-align: left;
 }
 
-mwc-register thead th.per-unit-cost {
+
+.register-container thead th.per-unit-cost {
   text-align: right;
 }
 
-mwc-register thead th.total {
+
+.register-container thead th.total {
   text-align: right;
   padding-right: 3px;
 }
 
 
-mwc-register input[type=number] {
+
+.register-container input[type=number] {
   width: 40px;
   text-align: right;
   font-size: 1em;
 }
 
-mwc-register .price {
+
+.register-container .price {
   text-align: right;
 }
 
-mwc-register td.unit-count {
+
+.register-container td.unit-count {
   text-align: right;
 }
 
-mwc-register .footer-label {
+
+.register-container .footer-label {
   text-align: right;
 }
 
-mwc-register input:not(:focus) {
+
+.register-containerinput:not(:focus) {
   border: none;
 }
 
-mwc-register .footer-label {
+
+.register-container.footer-label {
   font-weight: normal;
 }
 
-mwc-register thead {
+
+.register-containerthead {
   border-bottom: 1px solid #ccc;
 }
 
-mwc-register .subtotal {
+
+.register-container .subtotal {
   border-top: 1px solid #ccc;
 }
 
