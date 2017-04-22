@@ -1,0 +1,165 @@
+
+/* Order form modal */
+.order-form {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  right: 50px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+
+/* Order form internal layout */
+.order-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.order-header {
+  flex: 3 100%;
+  padding: 30px;
+}
+
+.order-header h2 {
+  text-align: center;
+
+}
+
+mwc-menu {
+  flex: 2;
+  padding: 20px;
+  margin: 20px;
+  border: 1px inset #ccc;
+  border-radius: 5px;
+}
+
+mwc-register {
+  flex: 1;
+  margin: 20px;
+  padding: 0 30px;
+}
+
+.order-actions {
+  flex: 3 100%;
+}
+
+
+/* Menu */
+
+.menu-item-group {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-item-button {
+  border: 2px outset gray;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 5px;
+}
+
+/* Register */
+mwc-register table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+mwc-register .price {
+  font-family: monospace;
+  font-size: 1.2em;
+}
+
+mwc-register input {
+  font-family: monospace;
+  font-size: 1.2em;
+}
+
+
+mwc-register thead th {
+  text-align: left;
+}
+
+mwc-register thead th.per-unit-cost {
+  text-align: right;
+}
+
+mwc-register thead th.total {
+  text-align: right;
+  padding-right: 3px;
+}
+
+
+mwc-register input[type=number] {
+  width: 40px;
+  text-align: right;
+  font-size: 1em;
+}
+
+mwc-register .price {
+  text-align: right;
+}
+
+mwc-register td.unit-count {
+  text-align: right;
+}
+
+mwc-register .footer-label {
+  text-align: right;
+}
+
+mwc-register input:not(:focus) {
+  border: none;
+}
+
+mwc-register .footer-label {
+  font-weight: normal;
+}
+
+mwc-register thead {
+  border-bottom: 1px solid #ccc;
+}
+
+mwc-register .subtotal {
+  border-top: 1px solid #ccc;
+}
+
+.order-actions {
+  padding: 20px;
+  text-align: center;
+}
+
+.order-actions button {
+  font-size: 1.2em;
+}
+
+.customer-information {
+  display: flex;
+  flex-flow: row wrap;
+  border: 3px solid gray;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.form-field {
+  text-align: left;
+  padding: 10px;
+}
+.form-field label  {
+  clear: both;
+  display: block;
+}
+
+
+.customer-information .form-field {
+  flex: 1 300px;
+}
