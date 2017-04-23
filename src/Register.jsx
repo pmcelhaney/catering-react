@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Calculator from './Calculator';
+import UnitCountTextBox from './UnitCountTextBox';
 
 const calculator = new Calculator({
   salesTaxRate: 0.12,
@@ -14,42 +15,14 @@ function formatCurrency(amount) {
 }
 
 
-function UnitCountTextBox({ lineItem, onChange }) {
-  return (
-    <input
-      type="number"
-      size="3"
-      min="0"
-      value={lineItem.quantity}
-      onChange={event => onChange(event.target.value, lineItem)}
-    />
-  );
-}
-
-UnitCountTextBox.propTypes = {
-  lineItem: PropTypes.shape({
-    quantity: PropTypes.number.isRequired,
-    item: PropTypes.shape({
-      name: PropTypes.string,
-      unitPrice: PropTypes.number,
-    }),
-  }).isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-function changeQuanityOfLineItem(quantity, lineItem) {
-  console.log(lineItem.item.name, quantity);
-}
-
-
-function Register(props) {
-  const cart = props.cart;
-
+function Register({ lineItems, onChangeQuantityOfItem }) {
   function renderLineItem(lineItem) {
     return (
       <tr key={lineItem.item.id}>
         <td>ⓧ</td>
-        <td className="unit-count" ><UnitCountTextBox lineItem={lineItem} onChange={changeQuanityOfLineItem} /></td>
+        <td className="unit-count" >
+          <UnitCountTextBox lineItem={lineItem} onChange={onChangeQuantityOfItem} />
+        </td>
         <td className="item-name">{lineItem.item.name}</td>
         <td className="per-unit-cost price">{formatCurrency(lineItem.item.unitPrice)}</td>
         <td className="total price">{formatCurrency(calculator.lineItemTotal(lineItem))}</td>
@@ -57,41 +30,35 @@ function Register(props) {
     );
   }
 
-
-  function renderLineItems(items) {
-    return items.map(renderLineItem);
-  }
-
-
   return (
     <div className="register-container">
       <table className="register">
         <thead>
           <tr>
             <th />
-            <th className="unit-count">Units {props.cart.lineItems.length}</th>
+            <th className="unit-count">Units {lineItems.length}</th>
             <th className="item-name">Item</th>
             <th className="per-unit-cost">Cost/Unit</th>
             <th className="total">Total</th>
           </tr>
         </thead>
         <tbody>
-          {renderLineItems(cart.lineItems)}
+          {lineItems.map(renderLineItem)}
           <tr className="subtotal">
             <th className="footer-label" colSpan="4">Subtotal</th>
-            <td className="price">{formatCurrency(calculator.subTotal(cart.lineItems))}</td>
+            <td className="price">{formatCurrency(calculator.subTotal(lineItems))}</td>
           </tr>
           <tr className="tax">
             <th className="footer-label" colSpan="4">Tax</th>
-            <td className="price">{formatCurrency(calculator.salesTax(cart.lineItems))} </td>
+            <td className="price">{formatCurrency(calculator.salesTax(lineItems))} </td>
           </tr>
           <tr className="total">
             <th className="footer-label" colSpan="4">Cash / Check Total</th>
-            <td className="price">{formatCurrency(calculator.total(cart.lineItems))}</td>
+            <td className="price">{formatCurrency(calculator.total(lineItems))}</td>
           </tr>
           <tr className="total-with-credit-card">
             <th className="footer-label" colSpan="4">Credit Card Total</th>
-            <td className="price">{formatCurrency(calculator.totalWithCreditCard(cart.lineItems))}</td>
+            <td className="price">{formatCurrency(calculator.totalWithCreditCard(lineItems))}</td>
           </tr>
         </tbody>
       </table>
@@ -101,9 +68,8 @@ function Register(props) {
 
 
 Register.propTypes = {
-  cart: PropTypes.shape({
-    lineItems: PropTypes.array.isRequired,
-  }).isRequired,
+  lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChangeQuantityOfItem: PropTypes.func.isRequired,
 };
 
 export default Register;

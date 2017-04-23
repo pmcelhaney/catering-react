@@ -99,6 +99,7 @@ class OrderForm extends React.Component {
     super();
 
     this.addItemToCart = this.addItemToCart.bind(this);
+    this.changeQuantityOfItem = this.changeQuantityOfItem.bind(this);
 
     this.order = new Order({
       id: 1,
@@ -124,6 +125,10 @@ class OrderForm extends React.Component {
     );
   }
 
+  changeQuantityOfItem(quantity, item) {
+    console.log(item.name, quantity);
+  }
+
   render() {
     return (
       <div className="order-form">
@@ -132,7 +137,7 @@ class OrderForm extends React.Component {
           <CustomerInformation order={this.order} />
         </div>
         <Menu items={generateMenu()} selectItem={this.addItemToCart} />
-        <Register cart={this.state.cart} />
+        <Register lineItems={this.state.cart.lineItems} onChangeQuantityOfItem={this.changeQuantityOfItem} />
         <div className="order-actions">
           <button type="button">Print Invoice</button>
           <button type="button">Print Catering Slip</button>
