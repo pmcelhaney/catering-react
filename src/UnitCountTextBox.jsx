@@ -9,7 +9,7 @@ function UnitCountTextBox({ lineItem, onChange }) {
       size="3"
       min="0"
       value={lineItem.quantity}
-      onChange={event => onChange(event.target.value, lineItem.item)}
+      onChange={event => onChange(+event.target.value, lineItem.item)}
     />
   );
 }

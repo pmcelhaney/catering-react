@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chai": "^3.5.0",
+    "immutability-helper": "^2.1.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"

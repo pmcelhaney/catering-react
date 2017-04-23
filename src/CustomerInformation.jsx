@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Order from './Order';
 
 
 function CustomerInformation(props) {
@@ -58,7 +57,9 @@ function CustomerInformation(props) {
 }
 
 CustomerInformation.propTypes = {
-  order: PropTypes.instanceOf(Order).isRequired,
+  order: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
 };
 
 export default CustomerInformation;
