@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 function menuListItem(item) {
   return (
-    <li>
+    <li key={item.id}>
       <button className="menu-item-button">{item.name}</button>
     </li>
   );

@@ -4,6 +4,7 @@ import Order from './Order';
 import Menu from './Menu';
 import Register from './Register';
 
+
 import CustomerInformation from './CustomerInformation';
 
 function generateMenu() {
@@ -65,8 +66,31 @@ class OrderForm extends React.Component {
       id: 1,
       name: 'John Doe',
     });
+
+    const cart = {
+      lineItems: [],
+    };
+
+    this.state = {
+      cart,
+    };
+
+    setTimeout(() => this.addItem({
+      id: 1,
+      name: 'foo',
+      unitPrice: 1,
+    }), 1000);
   }
 
+  addItem(item) {
+    this.setState(state => Object.assign(state,
+      {
+        cart: {
+          lineItems: state.cart.lineItems.concat([{ quantity: 1, item }]),
+        },
+      },
+    ));
+  }
 
   render() {
     return (
@@ -76,7 +100,7 @@ class OrderForm extends React.Component {
           <CustomerInformation order={this.order} />
         </div>
         <Menu items={generateMenu()} />
-        <Register cart="$ctrl.order.cart" />
+        <Register cart={this.state.cart} />
         <div className="order-actions">
           <button type="button">Print Invoice</button>
           <button type="button">Print Catering Slip</button>
