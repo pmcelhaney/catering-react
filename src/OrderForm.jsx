@@ -58,10 +58,31 @@ function generateMenu() {
 }
 
 
+function incrementQuanityOfLineItemById(lineItems, id) {
+  return lineItems.map((lineItem) => {
+    if (lineItem.item.id === id) {
+      return Object.assign(lineItem, { quantity: lineItem.quantity + 1 });
+    }
+    return lineItem;
+  });
+}
+
+function addLineItem(lineItems, item) {
+  const existingLineItem = lineItems.find(li => li.item.id === item.id);
+  if (existingLineItem) {
+    return incrementQuanityOfLineItemById(lineItems, item.id);
+  }
+  return lineItems.concat([{ quantity: 1, item }]);
+}
+
+
 class OrderForm extends React.Component {
 
   constructor() {
     super();
+
+    this.addItemToCart = this.addItemToCart.bind(this);
+
     this.order = new Order({
       id: 1,
       name: 'John Doe',
@@ -75,18 +96,18 @@ class OrderForm extends React.Component {
       cart,
     };
 
-    setTimeout(() => this.addItem({
+    setTimeout(() => this.addItemToCart({
       id: 1,
       name: 'foo',
-      unitPrice: 1,
+      unitPrice: 1.50,
     }), 1000);
   }
 
-  addItem(item) {
+  addItemToCart(item) {
     this.setState(state => Object.assign(state,
       {
         cart: {
-          lineItems: state.cart.lineItems.concat([{ quantity: 1, item }]),
+          lineItems: addLineItem(state.cart.lineItems, item),
         },
       },
     ));
@@ -99,7 +120,7 @@ class OrderForm extends React.Component {
           <h2>Order #{this.order.id}</h2>
           <CustomerInformation order={this.order} />
         </div>
-        <Menu items={generateMenu()} />
+        <Menu items={generateMenu()} addItemToCart={this.addItemToCart} />
         <Register cart={this.state.cart} />
         <div className="order-actions">
           <button type="button">Print Invoice</button>

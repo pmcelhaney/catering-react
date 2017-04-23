@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-function menuListItem(item) {
+function menuListItem(item, addItemToCart) {
   return (
     <li key={item.id}>
-      <button className="menu-item-button">{item.name}</button>
+      <button className="menu-item-button" onClick={() => addItemToCart(item)}>{item.name}</button>
     </li>
   );
 }
 
-function Menu(props) {
-  const listItems = props.items.map(menuListItem);
+function Menu({ items, addItemToCart }) {
+  const listItems = items.map(item => menuListItem(item, addItemToCart));
   return (
     <div className="menu">
       <ol
@@ -26,6 +26,7 @@ function Menu(props) {
 
 Menu.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addItemToCart: PropTypes.func.isRequired,
 };
 
 export default Menu;
