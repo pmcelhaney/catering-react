@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chai": "^3.5.0",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "prop-types": "^15.5.8"
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

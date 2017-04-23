@@ -112,22 +112,16 @@ class OrderForm extends React.Component {
     this.state = {
       cart,
     };
-
-    setTimeout(() => this.addItemToCart({
-      id: 1,
-      name: 'foo',
-      unitPrice: 1.50,
-    }), 1000);
   }
 
   addItemToCart(item) {
-    this.setState(state => Object.assign(state,
-      {
+    this.setState(state =>
+      ({
         cart: {
           lineItems: addLineItem(state.cart.lineItems, item),
         },
-      },
-    ));
+      }),
+    );
   }
 
   render() {

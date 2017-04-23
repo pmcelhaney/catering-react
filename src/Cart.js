@@ -1,38 +1,19 @@
+
+
 export default class Cart {
-  constructor(options) {
-    this.options = options;
-    this.lineItems = [];
+  constructor(products = {}) {
+    this.products = products;
   }
 
-  addItem(item) {
-    const existingLineItem = this.getLineItemById(item.id);
-    if (existingLineItem) {
-      existingLineItem.quantity += 1;
-    } else {
-      this.lineItems.push({
-        item,
-        quantity: 1,
-        price() { return this.quantity * this.item.unitPrice; },
-      });
-    }
-  }
-  getLineItemById(id) {
-    return this.lineItems.find(li => li.item.id === id);
-  }
-  subTotal() {
-    return this.lineItems.reduce((acc, item) => acc + item.price(), 0);
-  }
-  salesTax() {
-    return this.options.salesTaxRate * this.subTotal();
-  }
-  total() {
-    return this.subTotal() + this.salesTax();
-  }
-  creditCardFee() {
-    return this.options.creditCardFeeRate * this.total();
-  }
-  totalWithCreditCard() {
-    return this.total() + this.creditCardFee();
+
+  addItem(newProduct) {
+    const id = newProduct.id;
+    const product = this.products[id] || { product: newProduct, quantity: 0 };
+    const updatedProduct = Object.assign({}, product, {
+      quantity: product.quantity + 1,
+    });
+
+    return new Cart(Object.assign({}, this.products, { [id]: updatedProduct }));
   }
 
 
