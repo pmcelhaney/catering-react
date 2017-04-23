@@ -41,25 +41,28 @@ function changeQuanityOfLineItem(quantity, lineItem) {
   console.log(lineItem.item.name, quantity);
 }
 
-function renderLineItem(lineItem) {
-  return (
-    <tr key={lineItem.item.id}>
-      <td>ⓧ</td>
-      <td className="unit-count" ><UnitCountTextBox lineItem={lineItem} onChange={changeQuanityOfLineItem} /></td>
-      <td className="item-name">{lineItem.item.name}</td>
-      <td className="per-unit-cost price">{formatCurrency(lineItem.item.unitPrice)}</td>
-      <td className="total price">{formatCurrency(calculator.lineItemTotal(lineItem))}</td>
-    </tr>
-  );
-}
-
-
-function renderLineItems(items) {
-  return items.map(renderLineItem);
-}
 
 function Register(props) {
   const cart = props.cart;
+
+  function renderLineItem(lineItem) {
+    return (
+      <tr key={lineItem.item.id}>
+        <td>ⓧ</td>
+        <td className="unit-count" ><UnitCountTextBox lineItem={lineItem} onChange={changeQuanityOfLineItem} /></td>
+        <td className="item-name">{lineItem.item.name}</td>
+        <td className="per-unit-cost price">{formatCurrency(lineItem.item.unitPrice)}</td>
+        <td className="total price">{formatCurrency(calculator.lineItemTotal(lineItem))}</td>
+      </tr>
+    );
+  }
+
+
+  function renderLineItems(items) {
+    return items.map(renderLineItem);
+  }
+
+
   return (
     <div className="register-container">
       <table className="register">
