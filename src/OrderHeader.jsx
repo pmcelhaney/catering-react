@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-function CustomerInformation(props) {
+function OrderHeader({ order }) {
+  const header = order.header;
+  console.log(header.name);
   return (
     <div className="customer-information">
       <div className="form-field">
         <label htmlFor="name">Name</label>
-        <textarea name="place" rows="2" cols="30" value={props.order.name} readOnly />
+        <textarea name="place" rows="2" cols="30" value={header.name} readOnly />
       </div>
 
       <div className="form-field">
@@ -56,10 +58,11 @@ function CustomerInformation(props) {
   );
 }
 
-CustomerInformation.propTypes = {
+OrderHeader.propTypes = {
   order: PropTypes.shape({
-    name: PropTypes.string,
+    id: PropTypes.number,
+    header: PropTypes.Object,
   }).isRequired,
 };
 
-export default CustomerInformation;
+export default OrderHeader;
