@@ -1,3 +1,20 @@
+/*
+  TODO
+
+  Immutable.js
+
+  state.cart is an OrderedMap
+  menu is a List
+
+  if (state.cart.has(id)) {
+    state.cart.setIn([id, 'quantity'], start.cart.get(id).get('quantity') + 1)
+  } else {
+    state.cart.add(id, {quanity: 1, item})
+  }
+
+*/
+
+
 import React from 'react';
 import './order-form.css';
 import Order from './Order';
@@ -120,7 +137,7 @@ class OrderForm extends React.Component {
           <h2>Order #{this.order.id}</h2>
           <CustomerInformation order={this.order} />
         </div>
-        <Menu items={generateMenu()} addItemToCart={this.addItemToCart} />
+        <Menu items={generateMenu()} selectItem={this.addItemToCart} />
         <Register cart={this.state.cart} />
         <div className="order-actions">
           <button type="button">Print Invoice</button>

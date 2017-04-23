@@ -10,8 +10,8 @@ function menuListItem(item, addItemToCart) {
   );
 }
 
-function Menu({ items, addItemToCart }) {
-  const listItems = items.map(item => menuListItem(item, addItemToCart));
+function Menu({ items, selectItem }) {
+  const listItems = items.map(item => menuListItem(item, selectItem));
   return (
     <div className="menu">
       <ol
@@ -26,7 +26,7 @@ function Menu({ items, addItemToCart }) {
 
 Menu.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  addItemToCart: PropTypes.func.isRequired,
+  selectItem: PropTypes.func.isRequired,
 };
 
 export default Menu;
