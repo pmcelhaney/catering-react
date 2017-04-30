@@ -35,6 +35,7 @@ class OrderForm extends React.Component {
 
     this.addItemToOrder = this.addItemToOrder.bind(this);
     this.changeQuantityOfItem = this.changeQuantityOfItem.bind(this);
+    this.changeHeaderField = this.changeHeaderField.bind(this);
 
     const order = {
       id: 1,
@@ -65,8 +66,23 @@ class OrderForm extends React.Component {
     this.setState(state =>
       update(state, {
         order: {
-          lineItems: {
+          header: {
             $apply: lineItems => setQuanityOfLineItemById(quantity, lineItems, item.id),
+          },
+        },
+      }),
+    );
+  }
+
+  changeHeaderField(name, value) {
+    console.log('changeHeaderField', name, value);
+    this.setState(state =>
+      update(state, {
+        order: {
+          header: {
+            [name]: {
+              $set: value,
+            },
           },
         },
       }),
@@ -78,7 +94,7 @@ class OrderForm extends React.Component {
       <div className="order-form">
         <div className="order-header">
           <h2>Order #{this.state.order.id}</h2>
-          <OrderHeader order={this.state.order} />
+          <OrderHeader order={this.state.order} changeField={this.changeHeaderField} />
         </div>
         <Menu items={generateMenu()} selectItem={this.addItemToOrder} />
         <Register

@@ -1,12 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FormField from './FormField';
 
-function OrderHeader({ order }) {
+// <FormField
+//     label="Name"
+//     name="name"
+//     type="textarea"
+//     onChange="handleOrderHeaderFormChange"
+//   />;
+
+
+function OrderHeader({ order, changeField }) {
   const header = order.header;
-  console.log(header.name);
+
+
+  function handleOrderHeaderFormChange({ target }) {
+    changeField(target.name, target.value);
+    // console.log('handleOrderHeaderFormChange', target.name, target.value, target.type);
+  }
+
+
   return (
     <div className="customer-information">
+      <FormField
+        label="Name"
+        name="name"
+        type="text"
+        value={header.name}
+        onChange={handleOrderHeaderFormChange}
+      />
+
       <div className="form-field">
         <label htmlFor="name">Name</label>
         <textarea name="place" rows="2" cols="30" value={header.name} readOnly />
@@ -63,6 +87,7 @@ OrderHeader.propTypes = {
     id: PropTypes.number,
     header: PropTypes.Object,
   }).isRequired,
+  changeField: PropTypes.func.isRequired,
 };
 
 export default OrderHeader;
