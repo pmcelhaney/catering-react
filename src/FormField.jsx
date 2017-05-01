@@ -22,9 +22,13 @@ function FormField({ label, name, value, type, onChange }) {
 FormField.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+};
+
+FormField.defaultProps = {
+  value: '',
 };
 
 export default FormField;

@@ -31,40 +31,55 @@ function OrderHeader({ order, changeField }) {
         onChange={handleOrderHeaderFormChange}
       />
 
-      <div className="form-field">
-        <label htmlFor="name">Name</label>
-        <textarea name="place" rows="2" cols="30" value={header.name} readOnly />
-      </div>
+      <FormField
+        label="Phone"
+        name="phone"
+        type="phone"
+        value={header.phone}
+        onChange={handleOrderHeaderFormChange}
+      />
 
-      <div className="form-field">
-        <label htmlFor="phone">Phone</label>
-        <input name="phone" size="15" />
-      </div>
+      <FormField
+        label="Place"
+        name="place"
+        type="text"
+        value={header.place}
+        onChange={handleOrderHeaderFormChange}
+      />
 
-      <div className="form-field">
-        <label htmlFor="place">Place</label>
-        <textarea name="place" rows="4" cols="30" />
-      </div>
+      <FormField
+        label="Date"
+        name="date"
+        type="date"
+        value={header.date}
+        onChange={handleOrderHeaderFormChange}
+      />
 
-      <div className="form-field">
-        <label htmlFor="date">Date</label>
-        <input name="date" size="10" />&#128467;
-      </div>
+      <FormField
+        label="Be there at"
+        name="pickupTime"
+        type="text"
+        value={header.pickupTime}
+        onChange={handleOrderHeaderFormChange}
+      />
 
-      <div className="form-field">
-        <label htmlFor="pickUpTime">Be there at</label>
-        <input size="10" />
-      </div>
 
-      <div className="form-field">
-        <label htmlFor="eatTime">Eat at</label>
-        <input size="10" />
-      </div>
+      <FormField
+        label="Eat at"
+        name="eatTime"
+        type="text"
+        value={header.eatTime}
+        onChange={handleOrderHeaderFormChange}
+      />
 
-      <div className="form-field">
-        <label htmlFor="patronCount"># People</label>
-        <input name="patronCount" size="5" />
-      </div>
+      <FormField
+        label="# People"
+        name="patronCount"
+        type="text"
+        value={header.patronCount}
+        onChange={handleOrderHeaderFormChange}
+      />
+
 
       <div className="form-field">
         <input type="radio" name="where" defaultChecked />Pick up

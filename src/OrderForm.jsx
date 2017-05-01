@@ -75,7 +75,7 @@ class OrderForm extends React.Component {
   }
 
   changeHeaderField(name, value) {
-    console.log('changeHeaderField', name, value);
+    console.log(name, value);
     this.setState(state =>
       update(state, {
         order: {
@@ -90,6 +90,7 @@ class OrderForm extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="order-form">
         <div className="order-header">
