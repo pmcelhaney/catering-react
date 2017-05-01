@@ -74,8 +74,8 @@ class OrderForm extends React.Component {
     );
   }
 
+
   changeHeaderField(name, value) {
-    console.log(name, value);
     this.setState(state =>
       update(state, {
         order: {
@@ -97,7 +97,7 @@ class OrderForm extends React.Component {
           <h2>Order #{this.state.order.id}</h2>
           <OrderHeader order={this.state.order} changeField={this.changeHeaderField} />
         </div>
-        <Menu items={generateMenu()} selectItem={this.addItemToOrder} />
+        <Menu items={generateMenu()} onSelectItem={this.addItemToOrder} />
         <Register
           lineItems={this.state.order.lineItems}
           onChangeQuantityOfItem={this.changeQuantityOfItem}
