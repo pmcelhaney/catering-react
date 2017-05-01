@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 
 function UnitCountTextBox({ lineItem, onChange }) {
+  let input;
   return (
     <input
       type="number"
       size="3"
       min="0"
       value={lineItem.quantity}
-      onChange={event => onChange(+event.target.value, lineItem.item)}
+      ref={(ref) => { input = ref; }}
+      onChange={() => onChange(+input.value, lineItem.item)}
     />
   );
 }

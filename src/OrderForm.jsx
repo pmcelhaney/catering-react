@@ -10,7 +10,7 @@ import Register from './Register';
 import OrderHeader from './OrderHeader';
 
 
-function setQuanityOfLineItemById(quantity, lineItems, id) {
+function setQuantityOfLineItemById(quantity, lineItems, id) {
   return lineItems.map((lineItem) => {
     if (lineItem.item.id === id) {
       return Object.assign({}, lineItem, { quantity });
@@ -22,7 +22,7 @@ function setQuanityOfLineItemById(quantity, lineItems, id) {
 function addLineItem(lineItems, item) {
   const existingLineItem = lineItems.find(li => li.item.id === item.id);
   if (existingLineItem) {
-    return setQuanityOfLineItemById(existingLineItem.quantity + 1, lineItems, item.id);
+    return setQuantityOfLineItemById(existingLineItem.quantity + 1, lineItems, item.id);
   }
   return lineItems.concat([{ quantity: 1, item }]);
 }
@@ -66,8 +66,8 @@ class OrderForm extends React.Component {
     this.setState(state =>
       update(state, {
         order: {
-          header: {
-            $apply: lineItems => setQuanityOfLineItemById(quantity, lineItems, item.id),
+          lineItems: {
+            $apply: lineItems => setQuantityOfLineItemById(quantity, lineItems, item.id),
           },
         },
       }),
