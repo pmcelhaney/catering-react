@@ -3,10 +3,32 @@ import './App.css';
 import OrderForm from './OrderForm';
 import Home from './home/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <nav id="main-nav">
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {};
+
+    this.selectOrder = this.selectOrder.bind(this);
+  }
+
+  selectOrder(order) {
+    this.setState(state => Object.assign(state, {
+      selectedOrder: order,
+    }));
+  }
+
+  homeOrSelectedOrder() {
+    if (this.state.selectedOrder) {
+      return (<OrderForm />);
+    }
+    return (<Home onSelectOrder={this.selectOrder} />);
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <nav id="main-nav">
         Todays orders |
         Tomorrows orders |
         Unpaid orders |
@@ -14,9 +36,11 @@ function App() {
         Monthly summary |
         Log out
       </nav>
-      <Home />
-    </div>
-  );
+        {this.homeOrSelectedOrder()}
+
+      </div>
+    );
+  }
 }
 
 

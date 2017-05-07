@@ -1,5 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import OrderList from './OrderList';
+import NewOrderButton from './NewOrderButton';
+import localStore from '../store/LocalStore';
+
 
 function OrderSearch() {
   return (
@@ -18,6 +23,10 @@ export default class Home extends React.Component {
     this.state = {
       orders: [],
     };
+
+    this.createOrder = this.createOrder.bind(this);
+
+    this.store = localStore;
   }
 
   componentDidMount() {
@@ -56,12 +65,24 @@ export default class Home extends React.Component {
     }), 1000);
   }
 
+  createOrder() {
+    this.store.createOrder().then((order) => {
+      console.log(order);
+      this.props.onSelectOrder(order);
+    });
+  }
+
   render() {
     return (
       <div className="Home">
         <OrderSearch />
         <OrderList orders={this.state.orders} />
+        <NewOrderButton createOrder={this.createOrder} />
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  onSelectOrder: PropTypes.func.isRequired,
+};
