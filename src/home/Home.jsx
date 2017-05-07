@@ -28,48 +28,12 @@ export default class Home extends React.Component {
     this.store = localStore;
   }
 
-  componentDidMount() {
-    setTimeout(() =>
-    this.setState({
-      orders: [
-        {
-          id: 12200,
-          date: '2017-01-16',
-          name: 'Forest Gump',
-          amountDue: 328.47,
-          patronCount: 30,
-          deliveryMethod: 'pickup',
-          itemsAsString: 'Baked chicken, green beans, mac and cheese, corn bread, banana pudding',
-        },
-        {
-          id: 12201,
-          date: '2017-01-16',
-          name: 'Forest Gump',
-          amountDue: 328.47,
-          patronCount: 30,
-          deliveryMethod: 'pickup',
-          itemsAsString: 'Baked chicken, green beans, mac and cheese, corn bread, banana pudding',
-        },
-        {
-          id: 12202,
-          date: '2017-01-16',
-          name: 'Forest Gump',
-          amountDue: 328.47,
-          patronCount: 30,
-          deliveryMethod: 'pickup',
-          itemsAsString: 'Baked chicken, green beans, mac and cheese, corn bread, banana pudding',
-        },
-      ],
-
-    }), 1000);
-  }
-
 
   render() {
     return (
       <div className="Home">
         <OrderSearch />
-        <OrderList orders={this.state.orders} />
+        <OrderList orders={this.props.orders} onOpenOrder={this.props.onSelectOrder} />
         <NewOrderButton createOrder={this.props.onCreateOrder} />
       </div>
     );
@@ -79,4 +43,5 @@ export default class Home extends React.Component {
 Home.propTypes = {
   onSelectOrder: PropTypes.func.isRequired,
   onCreateOrder: PropTypes.func.isRequired,
+  orders: PropTypes.object.isRequired,
 };

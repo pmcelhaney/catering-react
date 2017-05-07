@@ -13,6 +13,7 @@ import OrderHeader from './OrderHeader';
 function OrderForm(props) {
   return (
     <div className="order-form">
+      <button type="button" onClick={props.onClose}>Close</button>
       <div className="order-header">
         <h2>Order #{props.order.id}</h2>
         <OrderHeader
@@ -52,6 +53,7 @@ OrderForm.propTypes = {
   onChangeHeaderField: PropTypes.func.isRequired,
   addItemToOrder: PropTypes.func.isRequired,
   changeQuantityOfItemInOrder: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default OrderForm;

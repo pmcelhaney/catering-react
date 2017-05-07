@@ -37,6 +37,7 @@ class App extends React.Component {
 
 
     this.selectOrder = this.selectOrder.bind(this);
+    this.deselectOrder = this.deselectOrder.bind(this);
     this.createOrder = this.createOrder.bind(this);
     this.changeHeaderField = this.changeHeaderField.bind(this);
     this.addItemToOrder = this.addItemToOrder.bind(this);
@@ -112,6 +113,11 @@ class App extends React.Component {
     );
   }
 
+  deselectOrder() {
+    this.setState(state => Object.assign(state, {
+      selectedOrderId: null,
+    }));
+  }
 
   homeOrSelectedOrder() {
     if (this.state.selectedOrderId) {
@@ -121,12 +127,14 @@ class App extends React.Component {
           onChangeHeaderField={this.changeHeaderField}
           addItemToOrder={this.addItemToOrder}
           changeQuantityOfItemInOrder={this.changeQuantityOfItemInOrder}
+          onClose={this.deselectOrder}
         />);
     }
     return (
       <Home
         onCreateOrder={this.createOrder}
         onSelectOrder={this.selectOrder}
+        orders={this.state.orders}
       />);
   }
 
