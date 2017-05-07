@@ -67,7 +67,8 @@ export default class Home extends React.Component {
 
   createOrder() {
     this.store.createOrder().then((order) => {
-      console.log(order);
+      console.log('creating', order);
+      this.props.onCreateOrder(order);
       this.props.onSelectOrder(order);
     });
   }

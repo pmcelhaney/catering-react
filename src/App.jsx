@@ -1,43 +1,130 @@
 import React from 'react';
+import update from 'immutability-helper';
+
 import './App.css';
 import OrderForm from './OrderForm';
 import Home from './home/Home';
+
+
+function setQuantityOfLineItemById(quantity, lineItems, id) {
+  return lineItems.map((lineItem) => {
+    if (lineItem.item.id === id) {
+      return Object.assign({}, lineItem, { quantity });
+    }
+    return lineItem;
+  });
+}
+
+function addLineItem(lineItems, item) {
+  const existingLineItem = lineItems.find(li => li.item.id === item.id);
+  if (existingLineItem) {
+    return setQuantityOfLineItemById(existingLineItem.quantity + 1, lineItems, item.id);
+  }
+  return lineItems.concat([{ quantity: 1, item }]);
+}
+
 
 class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      orders: {},
+    };
 
     this.selectOrder = this.selectOrder.bind(this);
+    this.createOrder = this.createOrder.bind(this);
+    this.changeHeaderField = this.changeHeaderField.bind(this);
+    this.addItemToOrder = this.addItemToOrder.bind(this);
+    this.changeQuantityOfItemInOrder = this.changeQuantityOfItemInOrder.bind(this);
   }
 
   selectOrder(order) {
     this.setState(state => Object.assign(state, {
-      selectedOrder: order,
+      selectedOrderId: order.id,
     }));
   }
 
+  createOrder(order) {
+    this.setState(state => Object.assign(state, {
+      orders: Object.assign(this.state.orders, { [order.id]: order }),
+    }));
+  }
+
+  changeHeaderField(order, name, value) {
+    this.setState(state =>
+      update(state, {
+        orders: {
+          [order.id]: {
+            header: {
+              [name]: {
+                $set: value,
+              },
+            },
+          },
+        },
+      }),
+    );
+  }
+
+  addItemToOrder(item, order) {
+    this.setState(state =>
+      update(state, {
+        orders: {
+          [order.id]: {
+            lineItems: {
+              $apply: lineItems => addLineItem(lineItems, item),
+            },
+          },
+        } }),
+    );
+  }
+
+
+  changeQuantityOfItemInOrder(quantity, item, order) {
+    console.log(quantity, item, order);
+    this.setState(state =>
+      update(state, {
+        orders: {
+          [order.id]: {
+            lineItems: {
+              $apply: lineItems => setQuantityOfLineItemById(quantity, lineItems, item.id),
+            },
+          } },
+      }),
+    );
+  }
+
+
   homeOrSelectedOrder() {
-    if (this.state.selectedOrder) {
-      return (<OrderForm order={this.state.selectedOrder} />);
+    if (this.state.selectedOrderId) {
+      return (
+        <OrderForm
+          order={this.state.orders[this.state.selectedOrderId]}
+          onChangeHeaderField={this.changeHeaderField}
+          addItemToOrder={this.addItemToOrder}
+          changeQuantityOfItemInOrder={this.changeQuantityOfItemInOrder}
+        />);
     }
-    return (<Home onSelectOrder={this.selectOrder} />);
+    return (
+      <Home
+        onCreateOrder={this.createOrder}
+        onSelectOrder={this.selectOrder}
+      />);
   }
 
   render() {
     return (
       <div className="App">
         <nav id="main-nav">
-        Todays orders |
-        Tomorrows orders |
-        Unpaid orders |
-        Edit menu items |
-        Monthly summary |
-        Log out
-      </nav>
+          Todays orders |
+          Tomorrows orders |
+          Unpaid orders |
+          Edit menu items |
+          Monthly summary |
+          Log out
+        </nav>
         {this.homeOrSelectedOrder()}
-
       </div>
     );
   }
