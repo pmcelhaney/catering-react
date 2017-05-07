@@ -20,7 +20,7 @@ class App extends React.Component {
 
   homeOrSelectedOrder() {
     if (this.state.selectedOrder) {
-      return (<OrderForm />);
+      return (<OrderForm order={this.state.selectedOrder} />);
     }
     return (<Home onSelectOrder={this.selectOrder} />);
   }

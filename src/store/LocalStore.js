@@ -8,6 +8,8 @@ export default {
       const orderId = data.nextOrderId;
       const order = {
         id: orderId,
+        lineItems: [],
+        header: {},
       };
       const copy = data;
       copy.orders[orderId] = order;

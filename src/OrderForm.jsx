@@ -30,20 +30,15 @@ function addLineItem(lineItems, item) {
 
 class OrderForm extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.addItemToOrder = this.addItemToOrder.bind(this);
     this.changeQuantityOfItem = this.changeQuantityOfItem.bind(this);
     this.changeHeaderField = this.changeHeaderField.bind(this);
 
-    const order = {
-      id: 1,
-      header: {
-        name: 'John Q. Doe',
-      },
-      lineItems: [],
-    };
+
+    const order = props.order;
 
     this.state = {
       order,
