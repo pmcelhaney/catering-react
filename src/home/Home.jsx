@@ -24,7 +24,6 @@ export default class Home extends React.Component {
       orders: [],
     };
 
-    this.createOrder = this.createOrder.bind(this);
 
     this.store = localStore;
   }
@@ -65,20 +64,13 @@ export default class Home extends React.Component {
     }), 1000);
   }
 
-  createOrder() {
-    this.store.createOrder().then((order) => {
-      console.log('creating', order);
-      this.props.onCreateOrder(order);
-      this.props.onSelectOrder(order);
-    });
-  }
 
   render() {
     return (
       <div className="Home">
         <OrderSearch />
         <OrderList orders={this.state.orders} />
-        <NewOrderButton createOrder={this.createOrder} />
+        <NewOrderButton createOrder={this.props.onCreateOrder} />
       </div>
     );
   }
@@ -86,4 +78,5 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   onSelectOrder: PropTypes.func.isRequired,
+  onCreateOrder: PropTypes.func.isRequired,
 };

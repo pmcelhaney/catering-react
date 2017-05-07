@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import './App.css';
 import OrderForm from './OrderForm';
 import Home from './home/Home';
+import localStore from './store/LocalStore';
 
 
 function setQuantityOfLineItemById(quantity, lineItems, id) {
@@ -28,9 +29,12 @@ class App extends React.Component {
 
   constructor() {
     super();
+
+    this.store = localStore;
     this.state = {
       orders: {},
     };
+
 
     this.selectOrder = this.selectOrder.bind(this);
     this.createOrder = this.createOrder.bind(this);
@@ -39,16 +43,30 @@ class App extends React.Component {
     this.changeQuantityOfItemInOrder = this.changeQuantityOfItemInOrder.bind(this);
   }
 
+
+  componentWillMount() {
+    this.store.loadData().then((data) => {
+      this.setState(data);
+    });
+  }
+
+  componentDidUpdate() {
+    this.store.saveData(this.state);
+  }
+
   selectOrder(order) {
     this.setState(state => Object.assign(state, {
       selectedOrderId: order.id,
     }));
   }
 
-  createOrder(order) {
-    this.setState(state => Object.assign(state, {
-      orders: Object.assign(this.state.orders, { [order.id]: order }),
-    }));
+  createOrder() {
+    this.store.createOrder().then((order) => {
+      this.setState(state => Object.assign(state, {
+        orders: Object.assign(this.state.orders, { [order.id]: order }),
+      }));
+      this.selectOrder(order);
+    });
   }
 
   changeHeaderField(order, name, value) {
@@ -82,7 +100,6 @@ class App extends React.Component {
 
 
   changeQuantityOfItemInOrder(quantity, item, order) {
-    console.log(quantity, item, order);
     this.setState(state =>
       update(state, {
         orders: {

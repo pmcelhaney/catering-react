@@ -5,7 +5,7 @@
 export default {
   createOrder() {
     return this.loadData().then((data) => {
-      const orderId = data.nextOrderId;
+      const orderId = +window.localStorage.getItem('catering_nextOrderId') || 1;
       const order = {
         id: orderId,
         lineItems: [],
@@ -13,7 +13,7 @@ export default {
       };
       const copy = data;
       copy.orders[orderId] = order;
-      copy.nextOrderId += 1;
+      window.localStorage.setItem('catering_nextOrderId', orderId + 1);
       this.saveData(copy);
       return order;
     });
@@ -25,7 +25,6 @@ export default {
         let stringData = window.localStorage.getItem('catering');
         if (!stringData) {
           stringData = JSON.stringify({
-            nextOrderId: 1,
             orders: {},
           });
           window.localStorage.setItem('catering', stringData);
