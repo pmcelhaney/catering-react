@@ -54,7 +54,7 @@ function Register({ lineItems, onChangeQuantityOfItem, discount, discountType })
         <thead>
           <tr>
             <th />
-            <th className="unit-count">Units {lineItems.length}</th>
+            <th className="unit-count">Units</th>
             <th className="item-name">Item</th>
             <th className="per-unit-cost">Cost/Unit</th>
             <th className="total">Total</th>

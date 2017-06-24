@@ -47,6 +47,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.store.loadData().then((data) => {
+      console.log('Loading stored data', data);
       this.setState(data);
     });
   }

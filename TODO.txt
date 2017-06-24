@@ -1,4 +1,3 @@
-apply discount
 today's orders
 tomorrow's orders
 unpaid orders
