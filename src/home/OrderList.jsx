@@ -2,12 +2,12 @@ import React from 'react';
 
 import './OrderList.css';
 
-export default function OrdersList({ orders, onOpenOrder }) {
-  const listOfOrders = Object.keys(orders).map(key => orders[key]);
+export default function OrderList({ orders, onOpenOrder }) {
+  console.log('orders', orders);
   return (
     <table className="OrderList">
       <tbody>
-        {listOfOrders.map(order => (
+        {orders.map(order => (
           <tr key={order.id}>
             <td><button onClick={() => onOpenOrder(order)}>Open</button></td>
             <td><button>Duplicate</button></td>

@@ -32,7 +32,7 @@ class App extends React.Component {
 
     this.store = localStore;
     this.state = {
-      orders: {},
+      orders: [],
     };
 
 
@@ -42,6 +42,8 @@ class App extends React.Component {
     this.changeHeaderField = this.changeHeaderField.bind(this);
     this.addItemToOrder = this.addItemToOrder.bind(this);
     this.changeQuantityOfItemInOrder = this.changeQuantityOfItemInOrder.bind(this);
+    this.todaysOrders = this.todaysOrders.bind(this);
+    this.visibleOrders = this.visibleOrders.bind(this);
   }
 
 
@@ -57,6 +59,7 @@ class App extends React.Component {
   }
 
   selectOrder(order) {
+    console.log('selecting order', order);
     this.setState(state => Object.assign(state, {
       selectedOrderId: order.id,
     }));
@@ -64,8 +67,9 @@ class App extends React.Component {
 
   createOrder() {
     this.store.createOrder().then((order) => {
+      console.log('created order', order);
       this.setState(state => Object.assign(state, {
-        orders: Object.assign(this.state.orders, { [order.id]: order }),
+        orders: this.state.orders.concat([order]),
       }));
       this.selectOrder(order);
     });
@@ -120,37 +124,49 @@ class App extends React.Component {
     }));
   }
 
-  homeOrSelectedOrder() {
+  navigate() {
     if (this.state.selectedOrderId) {
       return (
         <OrderForm
-          order={this.state.orders[this.state.selectedOrderId]}
+          order={this.state.orders.find(order => order.id === this.state.selectedOrderId)}
           onChangeHeaderField={this.changeHeaderField}
           addItemToOrder={this.addItemToOrder}
           changeQuantityOfItemInOrder={this.changeQuantityOfItemInOrder}
           onClose={this.deselectOrder}
         />);
     }
+
     return (
       <Home
         onCreateOrder={this.createOrder}
         onSelectOrder={this.selectOrder}
-        orders={this.state.orders}
+        orders={this.visibleOrders()}
       />);
+  }
+
+  visibleOrders() {
+    return this.state.orders;
+  }
+
+  todaysOrders() {
+    this.deselectOrder();
+    this.setState(state => Object.assign(state, {
+      navigationFilter: 'today',
+    }));
   }
 
   render() {
     return (
       <div className="App">
         <nav id="main-nav">
-          Todays orders |
-          Tomorrows orders |
+          <a href="#today" onClick={this.todaysOrders}>Today&apos;s orders</a> |
+          Tomorrow&apos;s orders |
           Unpaid orders |
           Edit menu items |
           Monthly summary |
           Log out
         </nav>
-        {this.homeOrSelectedOrder()}
+        {this.navigate()}
       </div>
     );
   }

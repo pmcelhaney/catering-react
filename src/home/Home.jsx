@@ -30,6 +30,7 @@ export default class Home extends React.Component {
 
 
   render() {
+    console.log('home orders', this.props.orders);
     return (
       <div className="Home">
         <OrderSearch />
@@ -43,5 +44,5 @@ export default class Home extends React.Component {
 Home.propTypes = {
   onSelectOrder: PropTypes.func.isRequired,
   onCreateOrder: PropTypes.func.isRequired,
-  orders: PropTypes.object.isRequired,
+//  orders: PropTypes.array.isRequired,
 };

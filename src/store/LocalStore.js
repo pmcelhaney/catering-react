@@ -25,7 +25,7 @@ export default {
         let stringData = window.localStorage.getItem('catering');
         if (!stringData) {
           stringData = JSON.stringify({
-            orders: {},
+            orders: [],
           });
           window.localStorage.setItem('catering', stringData);
         }
