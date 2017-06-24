@@ -14,12 +14,10 @@ import FormField from './FormField';
 function OrderHeader({ order, changeField }) {
   const header = order.header;
 
-
   function handleOrderHeaderFormChange({ target }) {
     changeField(target.name, target.value);
     // console.log('handleOrderHeaderFormChange', target.name, target.value, target.type);
   }
-
 
   return (
     <div className="customer-information">
@@ -89,9 +87,28 @@ function OrderHeader({ order, changeField }) {
 
       <div className="form-field">
         <label htmlFor="discount">Discount</label>
-        <input type="number" name="discount" value="" size="5" />
-        <input type="radio" name="discountType" value="percent" defaultChecked />Percent
-        <input type="radio" name="discountType" value="absolute" />Dollars
+        <input
+          type="number"
+          name="discount"
+          value={header.discount}
+          size="5"
+          min="0"
+          onChange={handleOrderHeaderFormChange}
+        />
+        <input
+          type="radio"
+          name="discountType"
+          value="percent"
+          checked={header.discountType === 'percent'}
+          onChange={handleOrderHeaderFormChange}
+        />Percent
+        <input
+          type="radio"
+          name="discountType"
+          value="direct"
+          checked={header.discountType === 'direct'}
+          onChange={handleOrderHeaderFormChange}
+        />Dollars
       </div>
     </div>
   );

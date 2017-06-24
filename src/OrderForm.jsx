@@ -28,6 +28,8 @@ function OrderForm(props) {
       />
       <Register
         lineItems={props.order.lineItems}
+        discount={props.order.header.discount}
+        discountType={props.order.header.discountType}
         onChangeQuantityOfItem={
               (quantity, item) =>
               props.changeQuantityOfItemInOrder(quantity, item, props.order)

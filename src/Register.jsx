@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Calculator from './Calculator';
+import Calculator from './calculator/Calculator';
 import UnitCountTextBox from './UnitCountTextBox';
-
-const calculator = new Calculator({
-  salesTaxRate: 0.12,
-  creditCardFeeRate: 0.06,
-});
+import PercentDiscounter from './calculator/PercentDiscounter';
+import DirectDiscounter from './calculator/DirectDiscounter';
 
 const currencyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
@@ -15,7 +12,16 @@ function formatCurrency(amount) {
 }
 
 
-function Register({ lineItems, onChangeQuantityOfItem }) {
+function Register({ lineItems, onChangeQuantityOfItem, discount, discountType }) {
+  const discounter = discountType === 'percent' ?
+    new PercentDiscounter(discount) :
+    new DirectDiscounter(discount);
+  const calculator = new Calculator({
+    salesTaxRate: 0.12,
+    creditCardFeeRate: 0.06,
+    discounter,
+  });
+
   function renderLineItem(lineItem) {
     return (
       <tr key={lineItem.item.id}>
@@ -28,6 +34,18 @@ function Register({ lineItems, onChangeQuantityOfItem }) {
         <td className="total price">{formatCurrency(calculator.lineItemTotal(lineItem))}</td>
       </tr>
     );
+  }
+
+  function optionalDiscountLine() {
+    if (discounter.hasValue()) {
+      return (
+        <tr className="discount">
+          <th className="footer-label" colSpan="4">Discount {discounter.label()}</th>
+          <td className="price">{formatCurrency(-calculator.discount(lineItems))}</td>
+        </tr>
+      );
+    }
+    return null;
   }
 
   return (
@@ -44,6 +62,7 @@ function Register({ lineItems, onChangeQuantityOfItem }) {
         </thead>
         <tbody>
           {lineItems.map(renderLineItem)}
+          {optionalDiscountLine()}
           <tr className="subtotal">
             <th className="footer-label" colSpan="4">Subtotal</th>
             <td className="price">{formatCurrency(calculator.subTotal(lineItems))}</td>
