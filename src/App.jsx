@@ -25,6 +25,11 @@ function addLineItem(lineItems, item) {
 }
 
 
+function todaysDateIso() {
+  return (new Date()).toISOString().substring(0, 10);
+}
+
+
 class App extends React.Component {
 
   constructor() {
@@ -145,7 +150,7 @@ class App extends React.Component {
   }
 
   visibleOrders() {
-    return this.state.orders;
+    return this.state.orders.filter(order => order.header.date === todaysDateIso());
   }
 
   todaysOrders() {
@@ -159,6 +164,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <nav id="main-nav">
+          <a href="#" onClick={this.allOrders}>All Orders</a> |
           <a href="#today" onClick={this.todaysOrders}>Today&apos;s orders</a> |
           Tomorrow&apos;s orders |
           Unpaid orders |
