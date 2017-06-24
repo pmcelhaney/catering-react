@@ -29,6 +29,10 @@ function todaysDateIso() {
   return (new Date()).toISOString().substring(0, 10);
 }
 
+function tomorrowsDateIso() {
+  const today = new Date();
+  return new Date(today.setDate(today.getDate() + 1)).toISOString().substring(0, 10);
+}
 
 class App extends React.Component {
 
@@ -47,7 +51,8 @@ class App extends React.Component {
     this.changeHeaderField = this.changeHeaderField.bind(this);
     this.addItemToOrder = this.addItemToOrder.bind(this);
     this.changeQuantityOfItemInOrder = this.changeQuantityOfItemInOrder.bind(this);
-    this.todaysOrders = this.todaysOrders.bind(this);
+    this.setNavigationFilter = this.setNavigationFilter.bind(this);
+    this.allOrders = this.allOrders.bind(this);
     this.visibleOrders = this.visibleOrders.bind(this);
   }
 
@@ -84,13 +89,20 @@ class App extends React.Component {
     this.setState(state =>
       update(state, {
         orders: {
-          [order.id]: {
-            header: {
-              [name]: {
-                $set: value,
-              },
-            },
-          },
+          $set: state.orders.map((o) => {
+            if (o.id === order.id) {
+              return update(o,
+                {
+                  header: {
+                    [name]: {
+                      $set: value,
+                    },
+                  },
+                },
+              );
+            }
+            return o;
+          }),
         },
       }),
     );
@@ -100,12 +112,20 @@ class App extends React.Component {
     this.setState(state =>
       update(state, {
         orders: {
-          [order.id]: {
-            lineItems: {
-              $apply: lineItems => addLineItem(lineItems, item),
-            },
-          },
-        } }),
+          $set: state.orders.map((o) => {
+            if (o.id === order.id) {
+              return update(o,
+                {
+                  lineItems: {
+                    $apply: lineItems => addLineItem(lineItems, item),
+                  },
+                },
+              );
+            }
+            return o;
+          }),
+        },
+      }),
     );
   }
 
@@ -150,13 +170,27 @@ class App extends React.Component {
   }
 
   visibleOrders() {
-    return this.state.orders.filter(order => order.header.date === todaysDateIso());
+    const filters = {
+      all() { return true; },
+      today(order) { return order.header.date === todaysDateIso(); },
+      tomorrow(order) { return order.header.date === tomorrowsDateIso(); },
+    };
+    const selectedFilter = filters[this.state.navigationFilter || 'all'];
+    return this.state.orders.filter(selectedFilter);
   }
 
-  todaysOrders() {
+  setNavigationFilter(filterName) {
     this.deselectOrder();
     this.setState(state => Object.assign(state, {
-      navigationFilter: 'today',
+      navigationFilter: filterName,
+    }));
+  }
+
+
+  allOrders() {
+    this.deselectOrder();
+    this.setState(state => Object.assign(state, {
+      navigationFilter: null,
     }));
   }
 
@@ -164,9 +198,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <nav id="main-nav">
-          <a href="#" onClick={this.allOrders}>All Orders</a> |
-          <a href="#today" onClick={this.todaysOrders}>Today&apos;s orders</a> |
-          Tomorrow&apos;s orders |
+          <a href="#all" onClick={this.allOrders}>All Orders</a> |
+          <a href="#today" onClick={() => this.setNavigationFilter('today')}>Today&apos;s orders</a> |
+          <a href="#tomorrow" onClick={() => this.setNavigationFilter('tomorrow')}>Tomorrow&apos;s orders</a> |
           Unpaid orders |
           Edit menu items |
           Monthly summary |
