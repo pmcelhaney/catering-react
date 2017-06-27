@@ -3,7 +3,7 @@ import Discounter from './Discounter';
 export default class PercentDiscounter extends Discounter {
   constructor(value) {
     super();
-    this.value = value;
+    this.value = value || 0;
   }
   label() {
     return `(${this.value}%)`;
@@ -15,6 +15,6 @@ export default class PercentDiscounter extends Discounter {
     return Math.min(this.value / 100, 1);
   }
   hasValue() {
-    return this.value > 0;
+    return this.value && this.value > 0;
   }
 }

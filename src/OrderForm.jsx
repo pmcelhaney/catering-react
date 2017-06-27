@@ -30,6 +30,7 @@ function OrderForm(props) {
         lineItems={props.order.lineItems}
         discount={props.order.header.discount}
         discountType={props.order.header.discountType}
+        onRemoveLineItem={lineItem => props.removeItemFromOrder(lineItem.item, props.order)}
         onChangeQuantityOfItem={
               (quantity, item) =>
               props.changeQuantityOfItemInOrder(quantity, item, props.order)
@@ -54,6 +55,7 @@ OrderForm.propTypes = {
   onChangeHeaderField: PropTypes.func.isRequired,
   addItemToOrder: PropTypes.func.isRequired,
   changeQuantityOfItemInOrder: PropTypes.func.isRequired,
+  removeItemFromOrder: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

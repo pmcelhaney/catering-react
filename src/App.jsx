@@ -50,6 +50,7 @@ class App extends React.Component {
     this.createOrder = this.createOrder.bind(this);
     this.changeHeaderField = this.changeHeaderField.bind(this);
     this.addItemToOrder = this.addItemToOrder.bind(this);
+    this.removeItemFromOrder = this.removeItemFromOrder.bind(this);
     this.changeQuantityOfItemInOrder = this.changeQuantityOfItemInOrder.bind(this);
     this.setNavigationFilter = this.setNavigationFilter.bind(this);
     this.allOrders = this.allOrders.bind(this);
@@ -129,18 +130,44 @@ class App extends React.Component {
     );
   }
 
-
   changeQuantityOfItemInOrder(quantity, item, order) {
-    this.setState(state =>
-      update(state, {
-        orders: {
-          [order.id]: {
-            lineItems: {
-              $apply: lineItems => setQuantityOfLineItemById(quantity, lineItems, item.id),
-            },
-          } },
-      }),
-    );
+    this.setState(state => update(state, {
+      orders: {
+        $set: state.orders.map((o) => {
+          if (o.id === order.id) {
+            return update(o,
+              {
+                lineItems: {
+                  $set: setQuantityOfLineItemById(quantity, o.lineItems, item.id),
+                },
+              },
+            );
+          }
+          return o;
+        }),
+      },
+    }));
+  }
+
+  removeItemFromOrder(item, order) {
+    console.log('remove');
+    this.setState(state => update(state, {
+      orders: {
+        $set: state.orders.map((o) => {
+          if (o.id === order.id) {
+            const newOrder = update(o,
+              {
+                lineItems: {
+                  $set: o.lineItems.filter(lineItem => lineItem.item.id !== item.id),
+                },
+              },
+            );
+            return newOrder;
+          }
+          return o;
+        }),
+      },
+    }));
   }
 
   deselectOrder() {
@@ -157,6 +184,7 @@ class App extends React.Component {
           onChangeHeaderField={this.changeHeaderField}
           addItemToOrder={this.addItemToOrder}
           changeQuantityOfItemInOrder={this.changeQuantityOfItemInOrder}
+          removeItemFromOrder={this.removeItemFromOrder}
           onClose={this.deselectOrder}
         />);
     }

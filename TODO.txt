@@ -1,5 +1,3 @@
-today's orders
-tomorrow's orders
 unpaid orders
 edit menu items
 monthly summary
@@ -9,3 +7,4 @@ show amount due in list
 show list of items in list
 search
 duplicate button
+paginations

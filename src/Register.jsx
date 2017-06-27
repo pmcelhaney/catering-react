@@ -12,7 +12,7 @@ function formatCurrency(amount) {
 }
 
 
-function Register({ lineItems, onChangeQuantityOfItem, discount, discountType }) {
+function Register({ lineItems, onChangeQuantityOfItem, onRemoveLineItem, discount, discountType }) {
   const discounter = discountType === 'percent' ?
     new PercentDiscounter(discount) :
     new DirectDiscounter(discount);
@@ -25,7 +25,7 @@ function Register({ lineItems, onChangeQuantityOfItem, discount, discountType })
   function renderLineItem(lineItem) {
     return (
       <tr key={lineItem.item.id}>
-        <td>ⓧ</td>
+        <td><button className="delete-button" onClick={() => onRemoveLineItem(lineItem)}>ⓧ</button></td>
         <td className="unit-count" >
           <UnitCountTextBox lineItem={lineItem} onChange={onChangeQuantityOfItem} />
         </td>
@@ -89,6 +89,7 @@ function Register({ lineItems, onChangeQuantityOfItem, discount, discountType })
 Register.propTypes = {
   lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChangeQuantityOfItem: PropTypes.func.isRequired,
+  onRemoveLineItem: PropTypes.func.isRequired,
 };
 
 export default Register;
