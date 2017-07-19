@@ -8,3 +8,7 @@ show list of items in list
 search
 duplicate button
 paginations
+print Invoice
+print catering Slip
+fulfill order
+record payment
