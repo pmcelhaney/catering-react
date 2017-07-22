@@ -221,7 +221,6 @@ class App extends React.Component {
   }
 
   activeClass(filter) {
-    console.log(this);
     if (this.state.navigationFilter === filter) {
       return 'active';
     }
