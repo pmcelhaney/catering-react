@@ -2,7 +2,6 @@ unpaid orders
 edit menu items
 monthly summary
 login / sessions
-style the close button
 show amount due in list
 show list of items in list
 search

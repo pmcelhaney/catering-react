@@ -12,7 +12,7 @@ import OrderHeader from './OrderHeader';
 function OrderForm(props) {
   return (
     <div className="order-form">
-      <button type="button" onClick={props.onClose}>Close</button>
+      <button type="button" onClick={props.onClose} className="close-button">ⓧ</button>
       <div className="order-header">
         <h2>Order #{props.order.id}</h2>
         <OrderHeader
