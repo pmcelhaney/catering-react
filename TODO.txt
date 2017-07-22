@@ -1,13 +1,20 @@
-edit menu items
-monthly summary
-login / sessions
-show amount due in list
-show list of items in list
-search
-duplicate button
-paginations
-print Invoice
-print catering Slip
-record date and time of payment (audit log)
-record date and time of fulfilled (audit log)
-fix date off-by-one error
+duplicate button (3)
+search (5)
+fix date off-by-one error (5)
+put on Kevin's server (5)
+orderform has its own state that communicates with the store (8)
+show amount due in list (3)
+print invoice to JS console (3)
+print catering slip to JS console (3)
+print invoice / catering slip to file (5)
+paginations (8)
+server-side store (13)
+edit menu items (13)
+must be logged in (3)
+log out button (1)
+Google login (8)
+admin can edit users (5)
+record date and time of payment (audit log) (1)
+record date and time of fulfilled (audit log) (1)
+monthly summary (8)
+clean up look and feel (13)
