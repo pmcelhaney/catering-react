@@ -56,6 +56,9 @@ class App extends React.Component {
     this.allOrders = this.allOrders.bind(this);
     this.visibleOrders = this.visibleOrders.bind(this);
     this.activeClass = this.activeClass.bind(this);
+    this.fulfillOrder = this.fulfillOrder.bind(this);
+    this.recordPayment = this.recordPayment.bind(this);
+    this.debugSetState = this.debugSetState.bind(this);
   }
 
 
@@ -67,6 +70,10 @@ class App extends React.Component {
 
   componentDidUpdate() {
     this.store.saveData(this.state);
+  }
+
+  debugSetState(fn) {
+    console.log('setState', fn(this.state));
   }
 
   selectOrder(order) {
@@ -82,6 +89,42 @@ class App extends React.Component {
       }));
       this.selectOrder(order);
     });
+  }
+
+  recordPayment(order) {
+    this.setState(state =>
+      update(state, {
+        orders: {
+          $set: state.orders.map((o) => {
+            if (o.id === order.id) {
+              return {
+                isPaid: true,
+                ...o,
+              };
+            }
+            return o;
+          }),
+        },
+      }),
+    );
+  }
+
+  fulfillOrder(order) {
+    this.setState(state =>
+      update(state, {
+        orders: {
+          $set: state.orders.map((o) => {
+            if (o.id === order.id) {
+              return {
+                isFulfilled: true,
+                ...o,
+              };
+            }
+            return o;
+          }),
+        },
+      }),
+    );
   }
 
   changeHeaderField(order, name, value) {
@@ -148,7 +191,6 @@ class App extends React.Component {
   }
 
   removeItemFromOrder(item, order) {
-    console.log('remove');
     this.setState(state => update(state, {
       orders: {
         $set: state.orders.map((o) => {
@@ -184,6 +226,8 @@ class App extends React.Component {
           changeQuantityOfItemInOrder={this.changeQuantityOfItemInOrder}
           removeItemFromOrder={this.removeItemFromOrder}
           onClose={this.deselectOrder}
+          fulfillOrder={this.fulfillOrder}
+          recordPayment={this.recordPayment}
         />);
     }
 
@@ -200,6 +244,7 @@ class App extends React.Component {
       all() { return true; },
       today(order) { return order.header.date === todaysDateIso(); },
       tomorrow(order) { return order.header.date === tomorrowsDateIso(); },
+      unpaid(order) { return !order.isPaid; },
     };
     const selectedFilter = filters[this.state.navigationFilter || 'all'];
     return this.state.orders.filter(selectedFilter);
@@ -234,7 +279,7 @@ class App extends React.Component {
           <a href="#all" className={this.activeClass(null)} onClick={this.allOrders}>All Orders</a> |
           <a href="#today" className={this.activeClass('today')} onClick={() => this.setNavigationFilter('today')}>Today&apos;s orders</a> |
           <a href="#tomorrow" className={this.activeClass('tomorrow')} onClick={() => this.setNavigationFilter('tomorrow')}>Tomorrow&apos;s orders</a> |
-          Unpaid orders |
+          <a href="#unpaid" className={this.activeClass('unpaid')} onClick={() => this.setNavigationFilter('unpaid')}>Unpaid orders</a> |
           Edit menu items |
           Monthly summary |
           Log out

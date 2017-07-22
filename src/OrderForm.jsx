@@ -10,6 +10,31 @@ import OrderHeader from './OrderHeader';
 
 
 function OrderForm(props) {
+  function fulfillOrderButton() {
+    if (props.order.isFulfilled) {
+      return '';
+    }
+    return (
+      <button
+        type="button"
+        onClick={() => props.fulfillOrder(props.order)}
+      >Fulfill Order</button>
+    );
+  }
+
+  function recordPaymentButton() {
+    if (props.order.isPaid) {
+      return '';
+    }
+    return (
+      <button
+        type="button"
+        onClick={() => props.recordPayment(props.order)}
+      >Record Payment</button>
+    );
+  }
+
+
   return (
     <div className="order-form">
       <button type="button" onClick={props.onClose} className="close-button">ⓧ</button>
@@ -39,8 +64,8 @@ function OrderForm(props) {
       <div className="order-actions">
         <button type="button">Print Invoice</button>
         <button type="button">Print Catering Slip</button>
-        <button type="button">Fulfill Order</button>
-        <button type="button">Record Payment</button>
+        {fulfillOrderButton()}
+        {recordPaymentButton()}
       </div>
     </div>
   );
@@ -51,11 +76,15 @@ OrderForm.propTypes = {
     id: PropTypes.number,
     lineItems: PropTypes.arrayOf(PropTypes.object),
     header: PropTypes.object,
+    isFulfilled: PropTypes.boolean,
+    isPaid: PropTypes.boolean,
   }).isRequired,
   onChangeHeaderField: PropTypes.func.isRequired,
   addItemToOrder: PropTypes.func.isRequired,
   changeQuantityOfItemInOrder: PropTypes.func.isRequired,
   removeItemFromOrder: PropTypes.func.isRequired,
+  fulfillOrder: PropTypes.func.isRequired,
+  recordPayment: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

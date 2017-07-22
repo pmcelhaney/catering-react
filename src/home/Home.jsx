@@ -30,7 +30,6 @@ export default class Home extends React.Component {
 
 
   render() {
-    console.log('home orders', this.props.orders);
     return (
       <div className="Home">
         <OrderSearch />

@@ -3,7 +3,6 @@ import React from 'react';
 import './OrderList.css';
 
 export default function OrderList({ orders, onOpenOrder }) {
-  console.log('orders', orders);
   return (
     <table className="OrderList">
       <tbody>
