@@ -1,4 +1,3 @@
-unpaid orders
 edit menu items
 monthly summary
 login / sessions
@@ -9,5 +8,6 @@ duplicate button
 paginations
 print Invoice
 print catering Slip
-fulfill order
-record payment
+record date and time of payment (audit log)
+record date and time of fulfilled (audit log)
+fix date off-by-one error
