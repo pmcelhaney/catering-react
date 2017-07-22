@@ -55,12 +55,12 @@ class App extends React.Component {
     this.setNavigationFilter = this.setNavigationFilter.bind(this);
     this.allOrders = this.allOrders.bind(this);
     this.visibleOrders = this.visibleOrders.bind(this);
+    this.activeClass = this.activeClass.bind(this);
   }
 
 
   componentWillMount() {
     this.store.loadData().then((data) => {
-      console.log('Loading stored data', data);
       this.setState(data);
     });
   }
@@ -70,7 +70,6 @@ class App extends React.Component {
   }
 
   selectOrder(order) {
-    console.log('selecting order', order);
     this.setState(state => Object.assign(state, {
       selectedOrderId: order.id,
     }));
@@ -78,7 +77,6 @@ class App extends React.Component {
 
   createOrder() {
     this.store.createOrder().then((order) => {
-      console.log('created order', order);
       this.setState(state => Object.assign(state, {
         orders: this.state.orders.concat([order]),
       }));
@@ -222,13 +220,21 @@ class App extends React.Component {
     }));
   }
 
+  activeClass(filter) {
+    console.log(this);
+    if (this.state.navigationFilter === filter) {
+      return 'active';
+    }
+    return '';
+  }
+
   render() {
     return (
       <div className="App">
         <nav id="main-nav">
-          <a href="#all" onClick={this.allOrders}>All Orders</a> |
-          <a href="#today" onClick={() => this.setNavigationFilter('today')}>Today&apos;s orders</a> |
-          <a href="#tomorrow" onClick={() => this.setNavigationFilter('tomorrow')}>Tomorrow&apos;s orders</a> |
+          <a href="#all" className={this.activeClass(null)} onClick={this.allOrders}>All Orders</a> |
+          <a href="#today" className={this.activeClass('today')} onClick={() => this.setNavigationFilter('today')}>Today&apos;s orders</a> |
+          <a href="#tomorrow" className={this.activeClass('tomorrow')} onClick={() => this.setNavigationFilter('tomorrow')}>Tomorrow&apos;s orders</a> |
           Unpaid orders |
           Edit menu items |
           Monthly summary |

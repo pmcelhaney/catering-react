@@ -18,3 +18,9 @@ body {
   right: 10px;
   font-size: 2em;
 }
+
+a.active {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
