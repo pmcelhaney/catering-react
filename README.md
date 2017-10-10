@@ -1,3 +1,7 @@
+This was a freelance project that didn't pan out and turned into an excuse to play with React. It doesn't serve any purpose other than to prove once upon a time I wrote some really sloppy React code.  
+
+----
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
